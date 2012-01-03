@@ -39,6 +39,8 @@ use Jackalope\FactoryInterface;
  * @license http://www.apache.org/licenses/LICENSE-2.0  Apache License Version 2.0, January 2004
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @author David Buchmann <david@liip.ch>
+ * @author Luis Cordova <cordoval@gmail.com>
  */
 class Client extends BaseTransport implements QueryTransport, WritingInterface, WorkspaceManagementInterface, NodeTypeManagementInterface
 {
@@ -722,6 +724,7 @@ class Client extends BaseTransport implements QueryTransport, WritingInterface, 
     public function getNode($path)
     {
         $this->assertLoggedIn();
+        $this->assertValidPath($path);
 
         $sql = "SELECT * FROM phpcr_nodes WHERE path = ? AND workspace_id = ?";
         $row = $this->conn->fetchAssoc($sql, array($path, $this->workspaceId));
